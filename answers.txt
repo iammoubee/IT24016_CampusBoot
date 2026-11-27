@@ -1,0 +1,5 @@
+﻿1. If @Retention(RUNTIME) is omitted, the annotation defaults to CLASS retention, so it is stored in the .class file but discarded by the JVM at runtime. Reflection calls like getAnnotation() would then return null, and the entire framework (scan, inject, validate, route) would silently do nothing. This is why all four annotations must use RetentionPolicy.RUNTIME.
+
+2. @Component maps to Spring's @Component/@Service/@Controller, @Value maps to Spring's @Value, @Range is similar to Bean Validation's @Min/@Max, and @Route is similar to @RequestMapping/@GetMapping. Unlike CampusBoot, real Spring supports dependency injection between beans, scopes (singleton/prototype), AOP proxies, and path variables via @PathVariable.
+
+3. setAccessible(true) lets reflection read and modify private fields, which is powerful because frameworks can inject config or validate data without public setters. However it is risky because it breaks encapsulation, can corrupt object state, and since Java 9+ may fail under the module system or be blocked by a SecurityManager.
